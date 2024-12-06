@@ -1,0 +1,1 @@
+docker-compose -f ./ci/prod/docker-compose.yml -p "talent-landing" up --build -d

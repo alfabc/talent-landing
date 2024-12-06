@@ -11,10 +11,10 @@ deploy-job: # This job runs in the deploy stage.
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
   script:
-    - ssh -o PubkeyAcceptedKeyTypes=+ssh-rsa -o StrictHostKeyChecking=no root@147.182.132.38 "
+    - ssh -o PubkeyAcceptedKeyTypes=+ssh-rsa -o StrictHostKeyChecking=no root@$ALFA_SERVER "
       cd ~/ &&
-      rm -rf ./evaluator-service &&
-      git clone git@gitlab.com:alfabc/candidate-evaluator.git -b main evaluator-service &&
-      cd ~/evaluator-service &&
+      rm -rf ./talent-landing &&
+      git clone git@gitlab.com:alfabc/talent-landing.git -b main talent-landing &&
+      cd ~/talent-landing &&
       chmod +x ./deploy.sh &&
       ./deploy.sh"
