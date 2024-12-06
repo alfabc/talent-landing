@@ -1,0 +1,20 @@
+deploy-job: # This job runs in the deploy stage.
+  tags:
+    - "docker"
+  only:
+    - "main"
+  image: alpine:3.19
+  before_script:
+    - apk add openssh-client
+    - eval $(ssh-agent -s)
+    - echo "$SSH_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+  script:
+    - ssh -o PubkeyAcceptedKeyTypes=+ssh-rsa -o StrictHostKeyChecking=no root@147.182.132.38 "
+      cd ~/ &&
+      rm -rf ./evaluator-service &&
+      git clone git@gitlab.com:alfabc/candidate-evaluator.git -b main evaluator-service &&
+      cd ~/evaluator-service &&
+      chmod +x ./deploy.sh &&
+      ./deploy.sh"

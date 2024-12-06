@@ -1,0 +1,25 @@
+{
+  "name": "talent-landing",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "cd ./backend && pnpm start",
+    "start:dev": "pnpm --filter ./frontend dev",
+    "build": "pnpm --filter ./frontend build"
+  },
+  "keywords": [],
+  "author": "Adriel Avila",
+  "license": "ISC",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "devDependencies": {
+    "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "@functional-ts/core": "^0.0.2",
+    "@functional-ts/http": "^0.0.17",
+    "@functional-ts/monads": "^1.2.2"
+  }
+}

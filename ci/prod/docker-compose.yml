@@ -1,0 +1,27 @@
+version: "3.3"
+services:
+  landing_service:
+    build:
+      context: ../../
+      dockerfile: ./ci/prod/dockerfile
+    restart: always
+    container_name: landing_service
+    environment:
+      PORT: 4001
+    expose:
+      - "4001"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.landing_service.rule=(Host(`talent24.ai`) || Host(`www.talent24.ai`))"
+      - "traefik.http.routers.landing_service.entrypoints=websecure"
+      - "traefik.http.routers.landing_service.tls.certresolver=myresolver"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.routers.landing_service_redir.rule=hostregexp(`{host:.+}`)"
+      - "traefik.http.routers.landing_service_redir.entrypoints=web"
+      - "traefik.http.routers.landing_service_redir.middlewares=redirect-to-https"
+    networks:
+      - traefik_network
+
+networks:
+  traefik_network:
+    external: true

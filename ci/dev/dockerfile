@@ -1,0 +1,21 @@
+FROM node:20-alpine
+
+ENV DIR_APP /home/app/candidate
+ENV ROOT_FOLDER .
+
+RUN mkdir /home/app && mkdir ${DIR_APP}
+
+WORKDIR ${DIR_APP}
+
+COPY ./.npmrc ${ROOT_FOLDER}/
+COPY ./*.yml ${ROOT_FOLDER}/
+COPY ./*.json ${ROOT_FOLDER}/
+COPY ./*.yaml ${ROOT_FOLDER}/
+COPY ./backend/*.json ${ROOT_FOLDER}/backend/
+
+RUN npm i -g pnpm@9.4.0
+RUN pnpm install
+
+ADD . .
+
+CMD ["pnpm", "start"]
